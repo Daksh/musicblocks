@@ -234,6 +234,7 @@ console.log(txt);
             [_('Show/hide palettes'), _('Hide or show the block palettes.'), 'header-icons/palette-button.svg'],
             [_('Show/hide blocks'), _('Hide or show the blocks and the palettes.'), 'header-icons/hide-blocks-button.svg'],
             [_('Expand/collapse collapsable blocks'), _('Expand or collapse start and action stacks.'), 'header-icons/collapse-blocks-button.svg'],
+            [_('Save to Lilypond'), _('Save the music to Lilypond Sheet Music'), 'header-icons/save-to-lilypond-button.svg'],
             [_('Help'), _('Show these messages.'), 'header-icons/help-button.svg'],
             [_('Expand/collapse option toolbar'), _('Click this button to expand or collapse the auxillary toolbar.'), 'header-icons/menu-button.svg'],
             [_('Load samples from server'), _('This button opens a viewer for loading example projects.'), 'header-icons/planet-button.svg'],
@@ -305,6 +306,141 @@ console.log(txt);
             } else {
                 logo.step(null, env);
             }
+        }
+
+        function saveLilyPondButton(){
+        	//basicblocks.document.getElementById("savelilypond").click();
+    	    var turtleCount = 0;
+            var clef = [];
+            var RODENTS = [_('mouse'), _('brown rat'), _('mole'), _('chipmunk'), _('red squirrel'), _('guinea pig'), _('capybara'), _('coypu'), _('black rat'), _('grey squirrel'), _('flying squirrel'), _('bat')];
+            var RODENTSSHORT = [_('ra'), _('rb'), _('rc'), _('rd'), _('re'), _('rf'), _('rg'), _('rh'), _('ri'), _('rj'), _('rk'), _('rl')];
+            for (var t in logo.lilypondStaging) {
+                turtleCount += 1;
+            }
+
+            console.log('saving as lilypond: ' + turtleCount);
+
+            logo.lilypondOutput += '%25 You can change the MIDI instruments below to anything on this list:%0A%25 (http:%2F%2Flilypond.org%2Fdoc%2Fv2.18%2Fdocumentation%2Fnotation%2Fmidi-instruments)%0A%0A';
+
+            var c = 0;
+            for (var t in logo.lilypondStaging) {
+                if (logo.lilypondStaging[t].length > 0) {
+                    var octaveTotal = 0;
+                    var noteCount = 0;
+                    for (var i = 0; i < logo.lilypondStaging[t].length; i++) {
+                        obj = logo.lilypondStaging[t][i];
+                        if (obj.length > 1) {
+                            octaveTotal += parseInt(obj[0].substr(obj[0].length - 1));
+                            noteCount += 1;
+                        }
+                    }
+                    if (noteCount > 0) {
+                        switch (Math.floor(octaveTotal / noteCount)) {
+                        case 0:
+                        case 1:
+                        case 2:
+                            clef.push('bass_8');
+                            break;
+                        case 3:
+                            clef.push('bass');
+                            break;
+                        default:
+                            clef.push('treble');
+                            break;
+                        }
+                    } else {
+                        clef.push('treble');
+                    }
+                    logo.processLilypondNotes(t);
+                    var instrumentName = logo.turtles.turtleList[t].name;
+                    if (instrumentName == _('start')) {
+                        instrumentName = RODENTS[t % 12].replace(/ /g, '_');
+                    } else if (instrumentName == t.toString()) {
+                        instrumentName = RODENTS[t % 12].replace(/ /g, '_');
+                    }
+                    logo.lilypondOutput += instrumentName + ' = {%0A';
+                    logo.lilypondOutput += '%25 %5Cmeter%0A';
+                    logo.lilypondOutput += logo.lilypondNotes[t];
+
+                    // Add bar to last turtle's output.
+                    if (c == turtleCount - 1) {
+                        logo.lilypondOutput += ' %5Cbar "%7C."'
+                    }
+                    logo.lilypondOutput += '%0A}%0A%0A';
+
+                    var shortInstrumentName = RODENTSSHORT[t % 12];
+
+                    logo.lilypondOutput += instrumentName.replace(/ /g, '_') + 'Voice = ';
+                    logo.lilypondOutput += '%5Cnew Staff %5Cwith {%0A';
+                    logo.lilypondOutput += '   %5Cclef "' + last(clef) + '"%0A';
+                    logo.lilypondOutput += '   instrumentName = "' + instrumentName + '"%0A';
+                    logo.lilypondOutput += '   shortInstrumentName = "' + shortInstrumentName + '"%0A';
+                    logo.lilypondOutput += '   midiInstrument = "acoustic grand"%0A';
+                    logo.lilypondOutput += '} { %5Cclef ' + last(clef) + ' %5C' + instrumentName.replace(/ /g, '_') + ' }%0A%0A';
+                }
+                c += 1;
+            }
+
+            // Begin the SCORE section.
+            logo.lilypondOutput += '%0A%5Cscore {%0A';
+            logo.lilypondOutput += '   <<%0A';
+
+            // Sort the staffs, treble on top, bass_8 on the bottom.
+            var CLEFS = ['treble', 'bass', 'bass_8'];
+            for (var c = 0; c < CLEFS.length; c++) {
+                var i = 0;
+                for (var t in logo.lilypondNotes) {
+                    if (clef[i] == CLEFS[c]) {
+                        if (logo.lilypondStaging[t].length > 0) {
+                            var instrumentName = logo.turtles.turtleList[t].name;
+                            if (instrumentName == _('start')) {
+                                instrumentName = RODENTS[t % 12].replace(/ /g, '_');
+                            } else if (instrumentName == t.toString()) {
+                                instrumentName = RODENTS[t % 12];
+                            }
+                            logo.lilypondOutput += '      %5C' + instrumentName.replace(/ /g, '_') + 'Voice%0A';
+                        }
+                    }
+                }
+            }
+
+            // Add GUITAR TAB in comments.
+            logo.lilypondOutput += '%0A%0A%25 GUITAR TAB SECTION%0A%25 Delete the %25{ and %25} below to include guitar tablature output.%0A%25{%0A      %5Cnew TabStaff = "guitar tab" %0A      <<%0A         %5Cclef moderntab%0A';
+            for (var c = 0; c < CLEFS.length; c++) {
+                var i = 0;
+                for (var t in logo.lilypondNotes) {
+                    if (clef[i] == CLEFS[c]) {
+                        if (logo.lilypondStaging[t].length > 0) {
+                            var instrumentName = logo.turtles.turtleList[t].name;
+                            if (instrumentName == _('start')) {
+                                instrumentName = RODENTS[t % 12].replace(/ /g, '_');
+                            } else if (instrumentName == t.toString()) {
+                                instrumentName = RODENTS[t % 12];
+                            }
+                            logo.lilypondOutput += '         %5Ccontext TabVoice = "'+ instrumentName + '" %5C' + instrumentName.replace(/ /g, '_') + '%0A';
+                        }
+                    }
+                }
+            }
+
+            // Close the SCORE sections.
+            logo.lilypondOutput += '      >>%0A%25}%0A';
+            logo.lilypondOutput += '%0A   >>%0A   %5Clayout {}%0A%0A';
+
+            // Add MIDI OUTPUT in comments.
+            logo.lilypondOutput += '%25 MIDI SECTION%0A%25 Delete the %25{ and %25} below to include MIDI output.%0A%25{%0A%5Cmidi {%0A   %5Ctempo 4=90%0A}%0A%25}%0A%0A}%0A%0A';
+
+            // ADD TURTLE BLOCKS CODE HERE
+            logo.lilypondOutput += '%25 MUSIC BLOCKS CODE%0A';
+            logo.lilypondOutput += '%25 Below is the code for the Music Blocks project that generated this Lilypond file.%0A%25{%0A%0A';
+            // prepareExport() returns json-encoded project data.
+            var projectData = prepareExport();
+            logo.lilypondOutput += projectData.replace(/]],/g, ']],%0A');
+            logo.lilypondOutput += '%0A%25}%0A%0A';
+
+            //doSaveLilypond(logo, args[0]);
+            doSaveLilypond(logo, 'lilypondexport.ly');
+
         }
 
         function doSlowButton() {
@@ -1733,6 +1869,8 @@ console.log(txt);
                 ['palette', changePaletteVisibility],
                 ['hide-blocks', changeBlockVisibility],
                 ['collapse-blocks', toggleCollapsibleStacks],
+                //['save-to-lilypond', toggleCollapsibleStacks],
+                ['save-to-lilypond', saveLilyPondButton],
                 ['help', showHelp]
             ];
 

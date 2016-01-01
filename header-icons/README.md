@@ -17,6 +17,7 @@ slow-button.svg: Creative Commons (http://creativecommons.org/licenses/by/3.0/us
 slow-music-button.svg: Creative Commons (http://creativecommons.org/licenses/by/3.0/us/)
 step-button.svg: Creative Commons (http://creativecommons.org/licenses/by/3.0/us/)
 stop-turtle-button.svg: Creative Commons (http://creativecommons.org/licenses/by/3.0/us/)
+save-to-lilypond.svg: Creative Commons (http://creativecommons.org/licenses/by/3.0/us/)
 
 Contributors
 ------------
