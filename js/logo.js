@@ -1463,7 +1463,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                     if (args.length == 1)
                         argslengthcheck = true;
                     //logo.saveAsLilypondFile(argslengthcheck);
-                    doSaveLilypond(logo, args[0]);
+                    //doSaveLilypond(logo, args[0]);
                 }
                 break;
             case 'savesvg':
