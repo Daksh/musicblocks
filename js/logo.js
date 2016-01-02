@@ -1459,12 +1459,12 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 logo.setTurtleDelay(0);
                 break;
             case 'savelilypond':
-                    var argslengthcheck = false;
-                    if (args.length == 1)
-                        argslengthcheck = true;
-                    //logo.saveAsLilypondFile(argslengthcheck);
-                    //doSaveLilypond(logo, args[0]);
-                }
+                var check = false;
+                if (args.length == 1)
+                    check = true;
+                this.savelyfile(logo, check);
+                if(check)
+                    doSaveLilypond(logo, args[0]);
                 break;
             case 'savesvg':
                 if (args.length == 1) {
@@ -2468,7 +2468,9 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
         }, DEFAULTDELAY * 1.5)
     }
 
-    this.saveAsLilypondFile = function(check = true){
+    this.savelyfile=function(logo, check){
+        console.log("In function savelyfile");
+
         var turtleCount = 0;
         var clef = [];
         var RODENTS = [_('mouse'), _('brown rat'), _('mole'), _('chipmunk'), _('red squirrel'), _('guinea pig'), _('capybara'), _('coypu'), _('black rat'), _('grey squirrel'), _('flying squirrel'), _('bat')];

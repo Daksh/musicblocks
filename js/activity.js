@@ -309,8 +309,14 @@ console.log(txt);
         }
 
         function saveLilyPondButton(){
-   			//logo.saveAsLilypondFile();
-            //doSaveLilypond(logo, 'lilypondexport.ly');
+   			logo.savelyfile(logo, true);
+            var lyfilename = prompt("Please enter the file name", "lilypondexport.ly");
+            if (lyfilename != null){
+            	if(lyfilename != "")
+            		doSaveLilypond(logo, lyfilename);
+            	else
+            		doSaveLilypond(logo, "lilypondexport.ly");
+            }
         }
 
         function doSlowButton() {
