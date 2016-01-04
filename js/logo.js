@@ -590,7 +590,10 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
             this.unhightlightQueue[turtle] = [];
             this.parameterQueue[turtle] = [];
             this.turtles.turtleList[turtle].running = true;
-            this.runFromBlock(this, turtle, startHere, 0, env);
+            if ( callbackFunction )
+                this.runFromBlock(this, turtle, startHere, 0, env, callbackFunction());
+            else
+                this.runFromBlock(this, turtle, startHere, 0, env);
         } else if (startBlocks.length > 0) {
             // If there are start blocks, run them all.
             for (var b = 0; b < startBlocks.length; b++) {
@@ -601,18 +604,21 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 this.parameterQueue[turtle] = [];
                 if (!this.turtles.turtleList[turtle].trash) {
                     this.turtles.turtleList[turtle].running = true;
-                    this.runFromBlock(this, turtle, startBlocks[b], 0, env);
+                    if ( callbackFunction )
+                        this.runFromBlock(this, turtle, startBlocks[b], 0, env, callbackFunction());
+                    else
+                        this.runFromBlock(this, turtle, startBlocks[b], 0, env);
                 }
             }
         } else {
             console.log('nothing to run');
         }
         this.refreshCanvas();
-        if ( callbackFunction )
-            callbackFunction ();
+        //if ( callbackFunction )
+            //callbackFunction ();
     }
 
-    this.runFromBlock = function(logo, turtle, blk, isflow, receivedArg) {
+    this.runFromBlock = function(logo, turtle, blk, isflow, receivedArg, callbackFunction) {
         if (blk == null) {
             return;
         }
@@ -629,7 +635,10 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 logo.stepQueue[turtle].push(blk);
             } else {
                 setTimeout(function() {
-                    logo.runFromBlockNow(logo, turtle, blk, isflow, receivedArg);
+                    if ( callbackFunction )
+                        logo.runFromBlockNow(logo, turtle, blk, isflow, receivedArg, undefined, callbackFunction());
+                    else
+                        logo.runFromBlockNow(logo, turtle, blk, isflow, receivedArg);
                 }, delay);
             }
         }
@@ -713,7 +722,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
         }
     }
 
-    this.runFromBlockNow = function(logo, turtle, blk, isflow, receivedArg, queueStart) {
+    this.runFromBlockNow = function(logo, turtle, blk, isflow, receivedArg, queueStart, callbackFunction) {
         // Run a stack of blocks, beginning with blk.
 
         // Sometimes we don't want to unwind the entire queue.
@@ -2466,8 +2475,13 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
         var me = this;
         this.saveTimeout = setTimeout(function () {
             // Save at the end to save an image
-            me.saveLocally();
+            if ( callbackFunction )
+                me.saveLocally(callbackFunction());
+            else    
+                me.saveLocally();
         }, DEFAULTDELAY * 1.5)
+        //if ( callbackFunction )
+//            callbackFunction ();
     }
 
     this.savelyfile=function(logo, check){

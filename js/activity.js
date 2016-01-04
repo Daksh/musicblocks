@@ -1237,7 +1237,7 @@ console.log(txt);
         window.prepareExport = prepareExport
         window.saveLocally = saveLocally
 
-        function saveLocally() {
+        function saveLocally(callbackFunction) {
 
             if (sugarizerCompatibility.isInsideSugarizer()) {
                 //sugarizerCompatibility.data.blocks = prepareExport();
@@ -1288,6 +1288,8 @@ console.log(txt);
             if (sugarizerCompatibility.isInsideSugarizer()) {
                 sugarizerCompatibility.saveLocally();
             }
+            if(callbackFunction)
+            	callbackFunction();
         }
 
         function loadProject(projectName, run, env) {
