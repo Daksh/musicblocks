@@ -439,7 +439,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
         }
     }
 
-    this.runLogoCommands = function(startHere, env) {
+    this.runLogoCommands = function(startHere, env, callbackFunction) {
         // Save the state before running.
         this.saveLocally();
 
@@ -608,6 +608,8 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
             console.log('nothing to run');
         }
         this.refreshCanvas();
+        if ( callbackFunction )
+            callbackFunction ();
     }
 
     this.runFromBlock = function(logo, turtle, blk, isflow, receivedArg) {
@@ -2470,6 +2472,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
 
     this.savelyfile=function(logo, check){
         console.log("In function savelyfile");
+        console.log(logo);
 
         var turtleCount = 0;
         var clef = [];
