@@ -318,14 +318,20 @@ console.log(txt);
    				alert('Finished Running the runLogoCommands');
    			});
 
-   			logo.savelyfile(logo, true);
-            var lyfilename = prompt("Please enter the file name", "lilypondexport.ly");
-            if (lyfilename != null){
-            	if(lyfilename != "")
-            		doSaveLilypond(logo, lyfilename);
-            	else
-            		doSaveLilypond(logo, "lilypondexport.ly");
-            }
+   			//logo.savelyfile(logo, true);
+   			
+   			setTimeout(function() {
+    			console.log("WAIT");
+    			logo.savelyfile(logo, true);
+            	var lyfilename = prompt("Please enter the file name", "lilypondexport.ly");
+            	if (lyfilename != null){
+	            	if(lyfilename != "")
+    	        		doSaveLilypond(logo, lyfilename);
+            		else
+	            		doSaveLilypond(logo, "lilypondexport.ly");
+            	}
+			}, (5 * 1000));
+
         }
 
         function doSlowButton() {
