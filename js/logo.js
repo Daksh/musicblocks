@@ -1837,13 +1837,9 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 // the use of the global timer in Tone.js for more
                 // accuracy.
 
-                if ( runSilently ){//if runSilently is passed
-                    if( runSilently==true )
-                        console.log("Running the notes silently in playnote");
-                }
-                else
+                if ( typeof runSilently=='undefined' )//if runSilently is not passed
                     runSilently = false;
-                
+
                 //console.log("runSilently is "+runSilently+" in runFromBlockNow starting of note");
                 
                 logo.oscList[turtle] = [];
@@ -1950,7 +1946,6 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                                 }
 
                                 if( runSilently==false ){
-                                //if( true ){
                                     var oscillators = [];
                                     if (logo.oscList[turtle].length > 0) {
                                         for (var i = 0; i < logo.oscList[turtle].length; i++) {
