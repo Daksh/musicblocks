@@ -508,6 +508,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
         // First we need to reconcile the values in all the value
         // blocks with their associated textareas.
         // FIXME: Do we still need this check???
+        console.log("blocklist number: " + this.blocks.blockList.length);
         for (var blk = 0; blk < this.blocks.blockList.length; blk++) {
             if (this.blocks.blockList[blk].label != null) {
                 if (this.blocks.blockList[blk].labelattr != null && this.blocks.blockList[blk].labelattr.value != '♮') {
@@ -2524,6 +2525,16 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
         this.saveTimeout = setTimeout(function() {
             // Save at the end to save an image
             me.saveLocally();
+            if (runSilently) {
+                logo.savelyfile(logo, true);
+                var lyfilename = prompt("Please enter the file name", "lilypondexport.ly");
+                if (lyfilename != null) {
+                    if (lyfilename != "")
+                        doSaveLilypond(logo, lyfilename);
+                    else
+                        doSaveLilypond(logo, "lilypondexport.ly");
+                }
+            }
         }, DEFAULTDELAY * 1.5)
     }
 

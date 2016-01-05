@@ -311,18 +311,6 @@ define(function(require) {
             logo.lilypondNotes = {};
             logo.lilypondStaging = {};
             logo.runLogoCommands(undefined, undefined, true);
-
-            setTimeout(function() {
-                logo.savelyfile(logo, true);
-                var lyfilename = prompt("Please enter the file name", "lilypondexport.ly");
-                if (lyfilename != null) {
-                    if (lyfilename != "")
-                        doSaveLilypond(logo, lyfilename);
-                    else
-                        doSaveLilypond(logo, "lilypondexport.ly");
-                }
-            }, (4 * 1000));
-
         }
 
         function doSlowButton() {
