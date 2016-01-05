@@ -1758,7 +1758,6 @@ console.log(txt);
                 ['palette', changePaletteVisibility],
                 ['hide-blocks', changeBlockVisibility],
                 ['collapse-blocks', toggleCollapsibleStacks],
-                //['save-to-lilypond', toggleCollapsibleStacks],
                 ['save-to-lilypond', saveLilyPondButton],
                 ['help', showHelp]
             ];
