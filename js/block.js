@@ -1159,7 +1159,7 @@ function loadEventHandlers(myBlock) {
                 if (!blocks.inLongPress) {
                     var topBlock = blocks.findTopBlock(thisBlock);
                     console.log('running from ' + blocks.blockList[topBlock].name);
-                    blocks.logo.runLogoCommands(topBlock);
+                    blocks.logo.runLogoCommands(topBlock, undefined, false);
                 }
             }
         }

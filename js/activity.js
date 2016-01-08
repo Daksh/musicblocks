@@ -300,7 +300,7 @@ define(function(require) {
         function doFastButton(env) {
             logo.setTurtleDelay(0);
             if (!turtles.running()) {
-                logo.runLogoCommands(null, env);
+                logo.runLogoCommands(null, env, false);
             } else {
                 logo.step(null, env);
             }
@@ -316,7 +316,7 @@ define(function(require) {
         function doSlowButton() {
             logo.setTurtleDelay(DEFAULTDELAY);
             if (!turtles.running()) {
-                logo.runLogoCommands();
+                logo.runLogoCommands(undefined, undefined, false);
             } else {
                 logo.step();
             }
@@ -333,7 +333,7 @@ define(function(require) {
                 logo.setTurtleDelay(TURTLESTEP);
                 // Queue and take first step.
                 if (!turtles.running()) {
-                    logo.runLogoCommands();
+                    logo.runLogoCommands(undefined, undefined, false);
                 }
                 logo.step();
             } else {
@@ -345,7 +345,7 @@ define(function(require) {
         function doSlowMusicButton() {
             logo.setNoteDelay(DEFAULTDELAY);
             if (!turtles.running()) {
-                logo.runLogoCommands();
+                logo.runLogoCommands(undefined, undefined, false);
             } else {
                 logo.stepNotes();
             }
@@ -362,7 +362,7 @@ define(function(require) {
                 logo.setTurtleDelay(TURTLESTEP);
                 // Queue and take first step.
                 if (!turtles.running()) {
-                    logo.runLogoCommands();
+                    logo.runLogoCommands(undefined, undefined, false);
                 }
                 logo.stepNote();
             } else {
@@ -975,7 +975,7 @@ define(function(require) {
                         break
                     case RETURN:
                         // toggle run
-                        logo.runLogoCommands();
+                        logo.runLogoCommands(undefined, undefined, false);
                         break
                     default:
                         currentKey = String.fromCharCode(event.keyCode);
@@ -1716,7 +1716,7 @@ define(function(require) {
                 if (myBlock.name == 'start' || myBlock.name == 'drum') {
                     var topBlock = logo.blocks.findTopBlock(thisBlock);
                     console.log('Playing through Play Button');
-                    logo.runLogoCommands(topBlock);
+                    logo.runLogoCommands(topBlock, undefined, false);
                 }
             }
         }
