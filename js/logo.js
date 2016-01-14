@@ -166,6 +166,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
 
     this.turtleOscs = {};
     this.notesOscs = {};
+    $("div.overlay").fadeToggle("fast");
 
     // Used to pause between each block as the program executes.
     this.setTurtleDelay = function(turtleDelay) {
@@ -2345,7 +2346,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                         if (parentAction != null) {
                             // console.log(logo.blocks.blockList[parentAction].name + ' ' + logo.namedActionBlock(logo.blocks.blockList[parentAction].name) + ' ' + logo.actionBlock(logo.blocks.blockList[parentAction].name) + ' ' + logo.doBlocks[turtle].indexOf(parentAction) + ' ' + actionTest);
                         }
-                        console.log(logo.blocks.blockList[blk].name + ' dispatching ' + logo.endOfFlowSignals[turtle][blk][i]);
+                        console.log(logo.blocks.blockList[blk].name + ' dispatching ' + logo.endOfFlowSignals[turtle][blk][i]);//DAXME
                         logo.stage.dispatchEvent(logo.endOfFlowSignals[turtle][blk][i]);
                     }
                     // Mark issued signals as null
@@ -2523,6 +2524,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
             }
         }, DEFAULTDELAY * 1.5)
+        $("div.overlay").fadeToggle("fast");
     }
 
     this.savelyfile = function(logo, check) {
