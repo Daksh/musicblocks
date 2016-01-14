@@ -1065,11 +1065,13 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
                 break;
             case 'clear':
-                logo.svgBackground = true;
-                logo.turtles.turtleList[turtle].doClear();
+                if(!runSilently){
+                    logo.svgBackground = true;
+                    logo.turtles.turtleList[turtle].doClear();
+                }
                 break;
             case 'setxy':
-                if (args.length == 2) {
+                if (args.length == 2 && !runSilently) {
                     if (typeof(args[0]) == 'string' || typeof(args[1]) == 'string') {
                         logo.errorMsg(NANERRORMSG, blk);
                         logo.stopTurtle = true;
@@ -1079,7 +1081,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
                 break;
             case 'arc':
-                if (args.length == 2) {
+                if (args.length == 2 && !runSilently) {
                     if (typeof(args[0]) == 'string' || typeof(args[1]) == 'string') {
                         logo.errorMsg(NANERRORMSG, blk);
                         logo.stopTurtle = true;
@@ -1129,7 +1131,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
                 break;
             case 'forward':
-                if (args.length == 1) {
+                if (args.length == 1 && !runSilently) {
                     if (typeof(args[0]) == 'string') {
                         logo.errorMsg(NANERRORMSG, blk);
                         logo.stopTurtle = true;
@@ -1139,7 +1141,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
                 break;
             case 'back':
-                if (args.length == 1) {
+                if (args.length == 1 && !runSilently) {
                     if (typeof(args[0]) == 'string') {
                         logo.errorMsg(NANERRORMSG, blk);
                         logo.stopTurtle = true;
@@ -1149,7 +1151,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
                 break;
             case 'right':
-                if (args.length == 1) {
+                if (args.length == 1 && !runSilently) {
                     if (typeof(args[0]) == 'string') {
                         logo.errorMsg(NANERRORMSG, blk);
                         logo.stopTurtle = true;
@@ -1159,7 +1161,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
                 break;
             case 'left':
-                if (args.length == 1) {
+                if (args.length == 1 && !runSilently) {
                     if (typeof(args[0]) == 'string') {
                         logo.errorMsg(NANERRORMSG, blk);
                         logo.stopTurtle = true;
