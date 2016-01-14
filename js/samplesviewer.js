@@ -403,7 +403,7 @@ function SamplesViewer(canvas, stage, refreshCanvas, load, loadRawProject, trash
     this.show = function() {
         document.querySelector('.planet').style.display = '';
         document.querySelector('body').classList.add('samples-shown');
-        document.querySelector('.canvasHolder').classList.add('hide');
+        document.querySelector('.canvasHolder').classList.add('hide');//PROBLEM
         document.querySelector('#theme-color').content = '#8bc34a';
         setTimeout(function() {
             // Time to release the mouse

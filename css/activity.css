@@ -56,7 +56,8 @@ div.back {
   top: 0;
   left: 0; }
 
-/*.canvasHolder.hide {
+/*WAS COMMENTED, not sure why*/
+.canvasHolder.hide {
   transform: scale(0.24);
   top: 117px;
   left: 1%;
@@ -69,7 +70,7 @@ div.back {
 .canvasHolder.hide canvas {
   width: 100%;
   height: 100%; }
-*/
+
 nav {
   position: fixed;
   top: 0px;
