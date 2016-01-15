@@ -31,6 +31,7 @@ var NOSQRTERRORMSG = 'Cannot take square root of negative number.';
 var ZERODIVIDEERRORMSG = 'Cannot divide by zero.';
 var EMPTYHEAPERRORMSG = 'empty heap.';
 var INVALIDPITCH = 'Not a valid pitch name';
+var LYNOTECNT = 0;
 
 function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
     refreshCanvas, textMsg, errorMsg, hideMsgs, onStopTurtle,
@@ -444,6 +445,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
         //console.log("runSilently is "+runSilently+" in runLogoCommands");
         // Save the state before running.
         this.saveLocally();
+        LYNOTECNT=0;
 
         for (var arg in this.evalOnStartList) {
             eval(this.evalOnStartList[arg]);
@@ -2346,7 +2348,9 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                         if (parentAction != null) {
                             // console.log(logo.blocks.blockList[parentAction].name + ' ' + logo.namedActionBlock(logo.blocks.blockList[parentAction].name) + ' ' + logo.actionBlock(logo.blocks.blockList[parentAction].name) + ' ' + logo.doBlocks[turtle].indexOf(parentAction) + ' ' + actionTest);
                         }
-                        console.log(logo.blocks.blockList[blk].name + ' dispatching ' + logo.endOfFlowSignals[turtle][blk][i]);//DAXME
+                        console.log(logo.blocks.blockList[blk].name + ' dispatching ' + logo.endOfFlowSignals[turtle][blk][i]);
+                        LYNOTECNT++;
+                        jQuery("#overlay").html(LYNOTECNT);
                         logo.stage.dispatchEvent(logo.endOfFlowSignals[turtle][blk][i]);
                     }
                     // Mark issued signals as null
@@ -2522,10 +2526,9 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                     else
                         doSaveLilypond(logo, "lilypondexport.ly");
                 }
+                jQuery("#overlay").fadeToggle("fast");
             }
         }, DEFAULTDELAY * 1.5)
-        //$("div.overlay").fadeToggle("fast");
-        jQuery("#overlay").fadeToggle("fast");
     }
 
     this.savelyfile = function(logo, check) {
