@@ -166,7 +166,7 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
 
     this.turtleOscs = {};
     this.notesOscs = {};
-    $("div.overlay").fadeToggle("fast");
+    jQuery("#overlay").fadeToggle("fast");
 
     // Used to pause between each block as the program executes.
     this.setTurtleDelay = function(turtleDelay) {
@@ -2524,7 +2524,8 @@ function Logo(matrix, musicnotation, canvas, blocks, turtles, stage,
                 }
             }
         }, DEFAULTDELAY * 1.5)
-        $("div.overlay").fadeToggle("fast");
+        //$("div.overlay").fadeToggle("fast");
+        jQuery("#overlay").fadeToggle("fast");
     }
 
     this.savelyfile = function(logo, check) {
