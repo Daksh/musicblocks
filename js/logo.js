@@ -1070,6 +1070,8 @@ function Logo(matrix, canvas, blocks, turtles, stage,
             case 'clear':
                 logo.svgBackground = true;
                 logo.turtles.turtleList[turtle].doClear();
+                this.bpm = TARGETBPM;
+                this.bpmFactor = TONEBPM / TARGETBPM;
                 break;
             case 'setxy':
                 if (args.length == 2) {

@@ -289,6 +289,9 @@ console.log(txt);
             var canvas = document.getElementById("music");
             var context = canvas.getContext("2d");
             context.clearRect(0, 0, canvas.width, canvas.height);
+
+            logo.bpm = TARGETBPM;
+            logo.bpmFactor = TONEBPM / TARGETBPM;
         }
 
         function doFastButton(env) {
