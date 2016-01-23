@@ -202,7 +202,7 @@ function initBasicProtoBlocks(palettes, blocks) {
     sharpBlock.staticLabels.push(_('sharp'));
     sharpBlock.adjustWidthToLabel();
     sharpBlock.flowClampZeroArgBlock();
-    
+
     var transpositionBlock = new ProtoBlock('settransposition');
     transpositionBlock.palette = palettes.dict['notes'];
     blocks.protoBlockDict['settransposition'] = transpositionBlock;
@@ -210,7 +210,7 @@ function initBasicProtoBlocks(palettes, blocks) {
     transpositionBlock.adjustWidthToLabel();
     transpositionBlock.defaults.push('1');
     transpositionBlock.flowClampOneArgBlock();
-    
+
     var transposition = new ProtoBlock('transposition');
     transposition.palette = palettes.dict['notes'];
     blocks.protoBlockDict['transposition'] = transposition;
@@ -332,6 +332,7 @@ function initBasicProtoBlocks(palettes, blocks) {
 
     var defaultbpmBlock = new ProtoBlock('defaultbpm');
     defaultbpmBlock.palette = palettes.dict['tone'];
+    blocks.protoBlockDict['defaultbpm'] = defaultbpmBlock;
     defaultbpmBlock.staticLabels.push(_('default beats per minute'));
     defaultbpmBlock.adjustWidthToLabel();
     defaultbpmBlock.parameterBlock();
@@ -421,7 +422,7 @@ function initBasicProtoBlocks(palettes, blocks) {
     sawtoothBlock.adjustWidthToLabel();
     sawtoothBlock.oneArgBlock();
     sawtoothBlock.defaults.push(440);
-       
+
     var lilypondBlock = new ProtoBlock('savelilypond');
     lilypondBlock.palette = palettes.dict['tone'];
     blocks.protoBlockDict['savelilypond'] = lilypondBlock;
@@ -1544,7 +1545,7 @@ function initBasicProtoBlocks(palettes, blocks) {
     evalBlock.defaults.push('x');
     evalBlock.defaults.push(100);
     */
-    
+
     var audioBlock = new ProtoBlock('playback');
     audioBlock.palette = palettes.dict['extras'];
     blocks.protoBlockDict['playback'] = audioBlock;
