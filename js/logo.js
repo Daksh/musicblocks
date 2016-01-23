@@ -420,6 +420,9 @@ function Logo(matrix, canvas, blocks, turtles, stage,
                 case 'bpm':
                     value = logo.bpm;
                     break;
+                case 'defaultbpm':
+                    value = TARGETBPM;
+                    break;
                 default:
                     if (name in this.evalParameterDict) {
                         eval(this.evalParameterDict[name]);
@@ -517,6 +520,10 @@ function Logo(matrix, canvas, blocks, turtles, stage,
                 }
             }
         }
+        
+        // Init the beats per minute
+        this.bpm = TARGETBPM;
+        this.bpmFactor = TONEBPM / TARGETBPM;
 
         // Init the graphic state.
         for (var turtle = 0; turtle < this.turtles.turtleList.length; turtle++) {
@@ -1738,6 +1745,18 @@ function Logo(matrix, canvas, blocks, turtles, stage,
                     }
                     this.bpm = args[0];
                     this.bpmFactor = TONEBPM / this.bpm;
+                }
+                break;
+            case 'setdefaultbpm':
+                if (args.length == 1 && typeof(args[0] == 'number')) {
+                    if (args[0] < 30) {
+                        logo.errorMsg(_('Default beats per minute must be > 30.'))
+                        args[0] = 30;
+                    } else if (args[0] > 1000) {
+                        logo.errorMsg(_('Maximum default beats per minute is 1000.'))
+                        args[0] = 1000;
+                    }
+                    TARGETBPM = args[0];
                 }
                 break;
             case 'setkey':
@@ -3047,6 +3066,9 @@ function Logo(matrix, canvas, blocks, turtles, stage,
                     break;
                 case 'bpm':
                     logo.blocks.blockList[blk].value = logo.bpm;
+                    break;
+                case 'defaultbpm':
+                    logo.blocks.blockList[blk].value = TARGETBPM;
                     break;
                 case 'key':
                     logo.blocks.blockList[blk].value = logo.keySignature[turtle];

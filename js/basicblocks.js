@@ -322,6 +322,20 @@ function initBasicProtoBlocks(palettes, blocks) {
     bpmBlock.adjustWidthToLabel();
     bpmBlock.parameterBlock();
 
+    var setdefaultbpmBlock = new ProtoBlock('setdefaultbpm');
+    setdefaultbpmBlock.palette = palettes.dict['tone'];
+    blocks.protoBlockDict['setdefaultbpm'] = setdefaultbpmBlock;
+    setdefaultbpmBlock.staticLabels.push(_('set default beats per minute'));
+    setdefaultbpmBlock.adjustWidthToLabel();
+    setdefaultbpmBlock.oneArgBlock();
+    setdefaultbpmBlock.defaults.push(90);
+
+    var defaultbpmBlock = new ProtoBlock('defaultbpm');
+    defaultbpmBlock.palette = palettes.dict['tone'];
+    defaultbpmBlock.staticLabels.push(_('default beats per minute'));
+    defaultbpmBlock.adjustWidthToLabel();
+    defaultbpmBlock.parameterBlock();
+
     var setkeyBlock = new ProtoBlock('setkey');
     setkeyBlock.palette = palettes.dict['tone'];
     blocks.protoBlockDict['setkey'] = setkeyBlock;
